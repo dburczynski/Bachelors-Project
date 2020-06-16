@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<link href="css/home.css" rel="stylesheet" type="text/css"/>
+<link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+<link href="css/mainlayout.css" rel="stylesheet" type="text/css"/>
+<link href="css/login-register.css" rel="stylesheet" type="text/css"/>
+
+<head>
+    <title>Forex Predictor</title>
+
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "200px";
+            document.getElementById("spanner").style.width = 0;
+
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("spanner").style.width = "50px"
+        }
+    </script>
+
+
+</head>
+<body class="body">
+<div class="main-container">
+    <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
+        <a href="/user-home">Home</a>
+        <a href="/user-edit">Account</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div id="spanner" class="menu" onmouseover="openNav()">
+
+        <p>M</p>
+        <p>E</p>
+        <p>N</p>
+        <p>U</p>
+    </div>
+    <div class="center-container">
+        <img th:src="@{/graphic/logo.png}" align="center">
+        <div class="login-page">
+            <div class="form">
+                <form class="login-form" th:action="@{/user-edit}" th:object="${beforeChangeUser}" method="post">
+                    <div>
+                        <input type="hidden" name="id" id="id" th:field="${beforeChangeUser.id}" placeholder="id" required=""/>
+                        <input type="hidden" name="fullname" id="inputFullname" class="form-control" th:field="${beforeChangeUser.fullname}" placeholder="Full Name" required="" />
+                        <input type="hidden" name="email" id="email"  th:field="${beforeChangeUser.email}" placeholder="email" required="" />
+                        <p th:text="${beforeChangeUser.email}" align="left">Email: </p>
+                        <p th:text="${beforeChangeUser.fullname}" align="left">Full name:</p>
+                    </div>
+                    <div th:if="${param.error}">
+                        Cannot change password.
+                    </div>
+                    <div>
+                        <input type="password" name="password" id="inputPassword" placeholder="password" required="" />
+                    </div>
+                    <div>
+                        <button type="submit">Apply</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+

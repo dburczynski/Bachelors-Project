@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Forex Predictor</title>
+    <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+    <link href="css/mainlayout.css" rel="stylesheet" type="text/css"/>
+    <link href="css/home.css" rel="stylesheet" type="text/css"/>
+
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "150px";
+            document.getElementById("spanner").style.width = 0;
+
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("spanner").style.width = "50px"
+        }
+    </script>
+</head>
+<body class="body">
+
+<div>
+    <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
+    <div id="spanner" class="menu" onmouseover="openNav()">
+        <p>M</p>
+        <p>E</p>
+        <p>N</p>
+        <p>U</p>
+    </div>
+    <div class="center-container">
+        <img th:src="@{/graphic/logo.png}" align="center">
+        <div class="welcome-container">
+            <a class="text-class">Aplikacja zajmuje się przewidywaniem zachowania akcji firm na podstawie danych zgromadzonych przez lata.</a>
+            <a class="text-class">Pod uwagę brane są ceny akcji z otwarcia oraz zamknięcia giełdy poszczególnych dni.</a>
+            <a class="text-class">Za ich pomocą udało się opracować podstawowy algorytm, dzięki któremu w prosty sposób można założyć w jaki sposób zachowają się akcje w przyszłości.</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+

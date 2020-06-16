@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Forex Predictor</title>
+    <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+    <link href="css/mainlayout.css" rel="stylesheet" type="text/css"/>
+    <link href="css/home.css" rel="stylesheet" type="text/css"/>
+    <link href="css/admin.css" rel="stylesheet" type="text/css"/>
+
+
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "150px";
+            document.getElementById("spanner").style.width = 0;
+
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("spanner").style.width = "50px"
+        }
+    </script>
+
+    <script th:inline="javascript">
+        function mlCommand(id) {
+            var form = document.createElement("form");
+            form.method = 'post'
+            var clickedButton = document.getElementById(id);
+
+            if(clickedButton.id == "create") {
+                var select = document.getElementById("slct2");
+
+                var hiddenField = document.createElement("input");
+                hiddenField.type = 'hidden';
+                hiddenField.name = 'cp';
+                hiddenField.value = select.options[select.selectedIndex].value;
+
+                var hiddenField2 = document.createElement("input");
+                hiddenField2.type = 'hidden';
+                hiddenField2.name = 'action';
+                hiddenField2.value = clickedButton.id;
+
+                var hiddenField3 = document.createElement("input");
+                hiddenField3.type = 'hidden';
+                hiddenField3.name = 'model';
+                hiddenField3.value = '';
+
+                form.appendChild(hiddenField)
+                form.appendChild(hiddenField2)
+                form.appendChild(hiddenField3)
+
+            }
+
+            else {
+                var select = document.getElementById("slct3");
+
+                var hiddenField = document.createElement("input");
+                hiddenField.type = 'hidden';
+                hiddenField.name = 'cp';
+                hiddenField.value = select.options[select.selectedIndex].value;
+
+                var hiddenField2 = document.createElement("input");
+                hiddenField2.type = 'hidden';
+                hiddenField2.name = 'action';
+                hiddenField2.value = clickedButton.id;
+
+                var select2 = document.getElementById("slct4");
+                var hiddenField3 = document.createElement("input");
+                hiddenField3.type = 'hidden';
+                hiddenField3.name = 'model';
+                hiddenField3.value = select2.options[select2.selectedIndex].value;
+
+                form.appendChild(hiddenField);
+                form.appendChild(hiddenField2);
+                form.appendChild(hiddenField3);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+
+    <script th:inline="javascript">
+        function apiCommand(id) {
+            var form = document.createElement("form");
+            form.method = 'post'
+            var clickedButton = document.getElementById(id);
+            var select  = document.getElementById("slct");
+
+            var hiddenField = document.createElement('input')
+            hiddenField.type = 'hidden';
+            hiddenField.name = 'cp';
+            hiddenField.value = select.options[select.selectedIndex].value;
+            form.appendChild(hiddenField)
+
+            var hiddenField2 = document.createElement('input');
+            hiddenField2.type = 'hidden'
+            hiddenField2.name = 'action';
+            hiddenField2.value = clickedButton.id;
+            form.appendChild(hiddenField2)
+
+            var hiddenField3 = document.createElement("input");
+            hiddenField3.type = 'hidden';
+            hiddenField3.name = 'model';
+            hiddenField3.value = '';
+            form.appendChild(hiddenField3)
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+
+
+</head>
+<body class="body">
+
+<div>
+    <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
+        <a href="/admin">Home</a>
+        <a href="/admin-api">API</a>
+        <a href="/admin-ml">ML</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div id="spanner" class="menu" onmouseover="openNav()">
+
+        <p>M</p>
+        <p>E</p>
+        <p>N</p>
+        <p>U</p>
+    </div>
+    <div class="center-container">
+        <img th:src="@{/graphic/logo.png}" align="center">
+        <div class="welcome-container">
+            <span th:unless="${taskrunning} == false">
+                <p>A task is currently running!</p>
+            </span>
+            <div class="row">
+                <div class="column">
+                    <select class="select" id="slct">
+                        <option th:each="currencyPair : ${currencyPairs}" th:value="${currencyPair}" th:text="${currencyPair}"></option>
+                    </select>
+                    <div>
+                        <button class="buttonAdmin" id="setup" onclick="apiCommand(this.id)">Setup</button>
+                    </div>
+                    <div>
+                        <button class="buttonAdmin" id="update" onclick="apiCommand(this.id)">Update</button>
+                    </div>
+                    <div>
+                        <button class="buttonAdmin" id="fix" onclick="apiCommand(this.id)">Fix</button>
+                    </div>
+                </div>
+                <div class="column">
+                    <select class="select" id="slct2">
+                        <option th:each="currencyPair : ${currencyPairs}" th:value="${currencyPair}" th:text="${currencyPair}"></option>
+                    </select>
+                    <div>
+                        <button class="buttonAdmin" id="create" onclick="mlCommand(this.id)">Model</button>
+                    </div>
+                    <span th:unless="${#lists.isEmpty(models)}">
+                        <select class="select" id="slct3" style="margin-top: 40px">
+                            <option th:each="currencyPair : ${currencyPairs}" th:value="${currencyPair}" th:text="${currencyPair}"></option>
+                        </select>
+                        <select class="select" id="slct4" style="margin-top: 40px">
+                            <option th:each="model : ${models}" th:value="${model}" th:text="${model}"></option>
+                        </select>
+                        <div>
+                            <button class="buttonAdmin" id="predict" onclick="mlCommand(this.id)">Predict</button>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

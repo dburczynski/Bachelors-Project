@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Forex Predictor</title>
+    <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+    <link href="css/mainlayout.css" rel="stylesheet" type="text/css"/>
+    <link href="css/home.css" rel="stylesheet" type="text/css"/>
+    <link href="css/user-add-currency.css" rel="stylesheet" type="text/css"/>
+
+    <!--    <link th:href="@{/css/charts.css}" rel="stylesheet" type="text/css"/>-->
+
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "200px";
+            document.getElementById("spanner").style.width = 0;
+
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("spanner").style.width = "50px"
+        }
+
+
+    </script>
+    <script th:inline="javascript">
+        function currencyOnClick(id) {
+            var form = document.createElement("form");
+            form.method = 'post'
+            var clickedButton = document.getElementById(id);
+
+            var hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden'
+            hiddenField.name = 'currencyPair';
+            hiddenField.value = clickedButton.id
+            form.appendChild(hiddenField)
+
+            var hiddenField2 = document.createElement('input');
+            hiddenField2.type = 'hidden';
+            hiddenField2.name = 'action'
+            hiddenField2.value = clickedButton.className
+            form.appendChild(hiddenField2)
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</head>
+<body class="body">
+
+<div>
+    <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
+        <a href="/user-home">Home</a>
+        <a href="/user-edit">Account</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div id="spanner" class="menu" onmouseover="openNav()">
+
+        <p>M</p>
+        <p>E</p>
+        <p>N</p>
+        <p>U</p>
+    </div>
+    <div class="center-container">
+        <img th:src="@{/graphic/logo.png}">
+        <br/>
+        <div class="container">
+            <div class="items">
+                <div class="items-head">
+                    <p>SUBSCRIBE To Currency Pairs</p>
+                    <hr>
+                </div>
+
+                <div class="items-body">
+                    <span th:unless="${amountOfPairs} == 0">
+                        <th:block th:each="subscribedCurrencyPair :${subscribedCurrencyPairs}">
+                            <div class="items-body-content">
+                                <button class="unsubscribe" th:text="${subscribedCurrencyPair}" th:id="${subscribedCurrencyPair}" onclick="currencyOnClick(this.id)"></button>
+                            </div>
+                        </th:block>
+                    </span>
+
+                    <span th:unless="${amountOfPairs} == 0">
+                        <th:block th:each="currencyPair :${currencyPairList}">
+                            <div class="items-body-content">
+                                <button class="subscribe" th:text="${currencyPair}" th:id="${currencyPair}" onclick="currencyOnClick(this.id)"></button>
+                            </div>
+                        </th:block>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<link href="css/home.css" rel="stylesheet" type="text/css"/>
+<link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+<link href="css/mainlayout.css" rel="stylesheet" type="text/css"/>
+<link href="css/login-register.css" rel="stylesheet" type="text/css"/>
+
+<head>
+    <title>Spring Security Example </title>
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "200px";
+            document.getElementById("spanner").style.width = 0;
+
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("spanner").style.width = "50px"
+        }
+    </script>
+</head>
+
+<body class="body">
+    <div>
+        <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+        <div id="spanner" class="menu" onmouseover="openNav()">
+            <p>M</p>
+            <p>E</p>
+            <p>N</p>
+            <p>U</p>
+        </div>
+        <div class="center-container">
+            <img th:src="@{/graphic/logo.png}" align="center">
+            <div class="login-page">
+                <div class="form">
+                    <form class="login-form" th:action="@{/register}" method="post">
+                        <div th:if="${param.error}">
+                            Invalid email and password.
+                        </div>
+                        <div th:if="${param.logout}">
+                            You have been logged out.
+                        </div>
+                        <div th:if="${userExists}">
+                            Email already in use.
+                        </div>
+                        <div>
+                            <input type="email" name="email" id="inputEmail" placeholder="email" required="" />
+                         </div>
+                        <div>
+                            <input type="password" name="password" id="inputPassword" placeholder="password" required="" />
+                        </div>
+                        <div>
+                            <input type="text" name="fullname" id="inputFullname" placeholder="fullname" required="" />
+                        </div>
+                        <div>
+                            <button type="submit">Register</button>
+                        </div>
+                        <p class="message">Already registered? <a href="/login">Login</a></p>
+                    </form>
+                </div>
+             </div>
+        </div>
+    </div>
+</body>
+
+</html>

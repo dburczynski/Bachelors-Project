@@ -1,0 +1,28 @@
+.buttonAdmin {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #364f8f;
+    width: 100px;
+    border: 0;
+    padding: 15px;
+    margin-top: 40px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buttonAdmin:hover, .buttonAdmin:active, .buttonAdmin:focus {
+    background: #617cc2;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

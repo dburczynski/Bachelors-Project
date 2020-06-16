@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Forex Predictor</title>
+    <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+    <link href="css/mainlayout.css" rel="stylesheet" type="text/css"/>
+    <link href="css/home.css" rel="stylesheet" type="text/css"/>
+    <link href="css/user-home.css" rel="stylesheet" type="text/css"/>
+
+    <!--    <link th:href="@{/css/charts.css}" rel="stylesheet" type="text/css"/>-->
+
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "200px";
+            document.getElementById("spanner").style.width = 0;
+
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("spanner").style.width = "50px"
+        }
+
+
+    </script>
+    <script th:inline="javascript">
+        function currencyOnClick(id) {
+
+            var url = ""
+
+            if(id == "add-currency") {
+                url = "/user-add-currency"
+            }
+            else {
+                url = "/view-currency-pair?cp="+id
+            }
+
+            window.location.href = url
+        }
+    </script>
+</head>
+<body class="body">
+
+<div>
+    <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
+        <a href="/user-home">Home</a>
+        <a href="/user-edit">Account</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div id="spanner" class="menu" onmouseover="openNav()">
+
+        <p>M</p>
+        <p>E</p>
+        <p>N</p>
+        <p>U</p>
+    </div>
+    <div class="center-container">
+        <img th:src="@{/graphic/logo.png}">
+        <br/>
+        <div class="container">
+            <div class="items">
+                    <div class="items-head">
+                        <p>Subscribed Currency Pairs</p>
+                        <hr>
+                    </div>
+
+                <div class="items-body">
+                    <span th:unless="${amountOfPairs} == 0">
+                        <th:block th:each="currencyPair :${currencyPairList}">
+                            <div class="items-body-content">
+                                <span th:text="${currencyPair}" th:id="${currencyPair}" onclick="currencyOnClick(this.id)"></span>
+                            </div>
+                        </th:block>
+                    </span>
+                    <div class="items-body-content" >
+                        <span id="add-currency" onclick="currencyOnClick(this.id)">Manage subscriptions.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+</body>
+</html>
+
+<!--            <div th:switch="${buy}">-->
+<!--                <p th:case="1"><img th:src="@{/graphic/up.png}"></p>-->
+<!--                <p th:case="0"><img th:src="@{/graphic/down.png}"></p>-->
+<!--            </div>-->
+<!--            <div class="container">-->
+<!--                <div id="container"-->
+<!--                     style="width: 550px; height: 400px; margin: 0 auto"></div>-->
+<!--            </div>-->
+
+
+
+
